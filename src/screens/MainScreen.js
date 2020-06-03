@@ -5,8 +5,8 @@ import { AntDesign } from '@expo/vector-icons';
 export const MainScreen = () => {
 
     const list = [
-        {name: 'Stability Analysis of Micro-Electrostatic Actuator’s Dynamic. Roman Voliansky, Vitaliy Kuznetsov, Oleksiy Sinkevych'},
-        {name: 'Simulation Modelling of Reliability of the Embedded Systems With Consideration for Failures. Mykola Dekhtyaruk, Viacheslav Cherevik'},
+        {name: 'Stability Analysis of Micro-Electrostatic Actuator’s Dynamic. Roman Voliansky, Vitaliy Kuznetsov, Oleksiy Sinkevych', id: '1'},
+        {name: 'Simulation Modelling of Reliability of the Embedded Systems With Consideration for Failures. Mykola Dekhtyaruk, Viacheslav Cherevik', id: '2'},
     ]
 
     return (
@@ -39,7 +39,7 @@ export const MainScreen = () => {
                 <View>
                     {
                         list.map( item => (
-                            <View style={style.listWrap}>
+                            <View key={item.key} style={style.listWrap}>
                                 <AntDesign name="check" size={24} color="black" />
                                 <Text style={style.listWrapText}>{item.name}</Text>
                             </View>

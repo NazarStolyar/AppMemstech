@@ -4,26 +4,31 @@ import {View, Text, Image, StyleSheet, ScrollView} from 'react-native'
 export const InfoScreen = () => {
     const images = [
         {
-            link: require('../../assets/info/1.jpg')
+            link: require('../../assets/info/1.jpg'),
+            id: '1'
         },
         {
-            link: require('../../assets/info/2.jpg')
+            link: require('../../assets/info/2.jpg'),
+            id: '2'
         },
         {
-            link: require('../../assets/info/3.jpg')
+            link: require('../../assets/info/3.jpg'),
+            id: '3'
         },
         {
-            link: require('../../assets/info/4.jpg')
+            link: require('../../assets/info/4.jpg'),
+            id: '4'
         },
         {
-            link: require('../../assets/info/5.jpg')
+            link: require('../../assets/info/5.jpg'),
+            id: '5'
         }
     ]
     return (
         <ScrollView style={style.container}>
             {
                 images.map(item => (
-                    <View style={style.containerImage}>
+                    <View key={item.id} style={style.containerImage}>
                         <Image
                             style={style.image}
                             source={item.link}>
