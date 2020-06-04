@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, ScrollView, FlatList} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import {startAssets} from "../startAssents";
 
 export const MainScreen = () => {
 
@@ -8,6 +9,8 @@ export const MainScreen = () => {
         {name: 'Stability Analysis of Micro-Electrostatic Actuator’s Dynamic. Roman Voliansky, Vitaliy Kuznetsov, Oleksiy Sinkevych', id: '1'},
         {name: 'Simulation Modelling of Reliability of the Embedded Systems With Consideration for Failures. Mykola Dekhtyaruk, Viacheslav Cherevik', id: '2'},
     ]
+
+    startAssets()
 
     return (
         <ScrollView style={style.container}>
@@ -39,7 +42,7 @@ export const MainScreen = () => {
                 <View>
                     {
                         list.map( item => (
-                            <View key={item.key} style={style.listWrap}>
+                            <View key={item.id} style={style.listWrap}>
                                 <AntDesign name="check" size={24} color="black" />
                                 <Text style={style.listWrapText}>{item.name}</Text>
                             </View>

@@ -1,7 +1,8 @@
 import React, {useEffect, useCallback, useState} from 'react';
-import {View, Text, TextInput, StyleSheet, ScrollView} from 'react-native'
+import {View, Text, TextInput, StyleSheet, ScrollView, Image} from 'react-native'
 import {AgendaComponent} from "../components/AgendaComponent";
 import {ItemAgenda} from "./ItemAgenda";
+import {Env} from '../enviroments/env'
 
 export const AgendaScreen = () => {
     const [agenda, setAgenda] = useState([])
@@ -11,7 +12,7 @@ export const AgendaScreen = () => {
 
 
     const fetchAgenda = async () => {
-        const response = await fetch('https://spreadsheets.google.com/feeds/list/1fy9Qcp82GtqALhdBSISPLehdJf0HirArVcpeFxYVFQ8/od6/public/values?alt=json', {
+        const response = await fetch(Env.gsUrl, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
         })
@@ -31,38 +32,43 @@ export const AgendaScreen = () => {
         newAgenda = agenda.filter(item => {
             return item.gsx$name.$t.indexOf(text) > -1
         })
-        console.log(newAgenda.length)
         setFilter(newAgenda)
     }
 
     let content
     if (agenda.length === 0) {
-       content = (
-           <View>
-               <TextInput style={style.input} onChangeText={text => changeText(text)}/>
-               <Text>
-                   Loading data...
-               </Text>
-           </View>
-       )
+        content = (
+            <View style={style.loadContainer}>
+                <TextInput  placeholder="Enter text" style={style.input} onChangeText={text => changeText(text)}/>
+                <Image
+                    source={
+                        require('../../assets/logo.png')
+                    }>
+
+                </Image>
+                <Text style={style.loadText}>
+                    Loading data...
+                </Text>
+            </View>
+        )
     } else {
 
         if (!itemAgenda) {
             content = (
                 <View>
-                    <TextInput style={style.input} onChangeText={text => changeText(text)}/>
+                    <TextInput  placeholder="Enter text" style={style.input} onChangeText={text => changeText(text)}/>
                     {
                         filterAgenda.map((item) => (
                             <AgendaComponent key={item.gsx$number.$t} style={style.itemAgenda} onAgenda={(item) => {
                                 AgendaScreen(item)
-                            } } Agenda={item} />
+                            }} Agenda={item}/>
                         ))
                     }
                 </View>
 
             )
         } else {
-            content =  <ItemAgenda backToAgenda={() => AgendaScreen(null)} Agenda={itemAgenda} />
+            content = <ItemAgenda backToAgenda={() => AgendaScreen(null)} Agenda={itemAgenda}/>
         }
     }
     return (
@@ -81,12 +87,25 @@ const style = StyleSheet.create({
         width: '100%'
     },
     itemAgenda: {
-      marginBottom: 15,
+        marginBottom: 15,
     },
     input: {
         width: '100%',
         borderBottomWidth: 1,
         borderBottomColor: '#00AAFF',
         marginBottom: 20,
+    },
+    loadContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
+        marginTop: 40
+    },
+    loadText: {
+        textAlign: 'center',
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginTop: 15
     }
 });

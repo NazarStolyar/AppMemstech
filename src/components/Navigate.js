@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, Button} from 'react-native';
-import {  Entypo, MaterialCommunityIcons, Octicons, FontAwesome } from '@expo/vector-icons';
+import {  Entypo, MaterialCommunityIcons, Octicons, FontAwesome, Feather } from '@expo/vector-icons';
 
 
 export const Navigate = ({ onSubmit, onScreen }) => {
@@ -30,6 +30,12 @@ export const Navigate = ({ onSubmit, onScreen }) => {
                                 color={onScreen === 'committeScree' ? '#00AAFF' : '#4B4B4B'}
                                 onPress={() => onSubmit('committeScree')}>
             </FontAwesome.Button>
+            <Feather.Button style={style.button}
+                                name="star"
+                                size={30}
+                                color={onScreen === 'favoriteScreen' ? '#00AAFF' : '#4B4B4B'}
+                                onPress={() => onSubmit('favoriteScreen')}>
+            </Feather.Button>
         </View>
     );
 }

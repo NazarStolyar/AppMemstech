@@ -6,6 +6,8 @@ import {CommitteScreen} from "./src/screens/CommitteScreen";
 import {InfoScreen} from "./src/screens/InfoScreen";
 import {AgendaScreen} from "./src/screens/AgendaScreen";
 import {Navigate} from "./src/components/Navigate";
+import {FavoriteScreen} from "./src/screens/FavoriteScreen";
+
 
 
 export default function App() {
@@ -15,6 +17,8 @@ export default function App() {
         <MainScreen/>
     )
 
+
+
     if (screen === 'mainScreen') {
         content =  <MainScreen/>
     } else if (screen === 'committeScree') {
@@ -23,7 +27,10 @@ export default function App() {
         content =  <InfoScreen/>
     } else if (screen === 'agendaScreen') {
         content = <AgendaScreen/>
+    } else if (screen === 'favoriteScreen') {
+        content = (<FavoriteScreen />)
     }
+
     return (
         <View style={styles.container}>
             <Navbar/>
