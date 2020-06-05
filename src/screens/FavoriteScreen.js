@@ -27,12 +27,12 @@ export const FavoriteScreen = () => {
         const result = await DB.removeFavorite(item)
         fetchFavoriteAgenda()
         Alert.alert('Agenda deleted successfully')
+        if (favoriteAgenda.length === 0) {
+            loadNotAgendaTemplate(false)
+        }
     }
-
-
     let content
     if (favoriteAgenda.length === 0) {
-
         if (isNotAgenda) {
             content = (<View style={style.loadContainer}>
                 <Image
@@ -54,26 +54,21 @@ export const FavoriteScreen = () => {
 
                 </Image>
                 <Text style={style.loadText}>
-                    There is data...
+                    There is not data...
                 </Text>
             </View>)
         }
-
-
     } else {
        content = (
            <View>
-
                {
                    favoriteAgenda.map((item) => (
                        <FavoriteItemAgenda deleteAgenda={(item) => deleteAgenda(item)} Agenda={item} key={item.id} />
                    ))
                }
-
            </View>
        )
     }
-
 
     return (
         <ScrollView style={style.container}>
