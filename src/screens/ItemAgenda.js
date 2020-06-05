@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, ScrollView, Button, StyleSheet} from 'react-native';
+import {View, Text, ScrollView, Button, StyleSheet, Alert} from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import {DB} from "../db";
 
@@ -18,7 +18,7 @@ export const ItemAgenda = ({Agenda, backToAgenda}) => {
             description: item.gsx$description.$t
         }
         const id =  await DB.addFavorite(agenda)
-        console.log(id)
+        Alert.alert('Agenda added successfully')
     }
 
     return (

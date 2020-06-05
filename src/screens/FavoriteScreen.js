@@ -1,14 +1,20 @@
 import React, {useState, useEffect, useCallback} from 'react'
-import {View, Text, StyleSheet, ScrollView, TextInput, Image} from 'react-native'
+import {View, Text, StyleSheet, ScrollView, Alert, Image} from 'react-native'
 import {DB} from "../db";
-import {AgendaComponent} from "../components/AgendaComponent";
+import {FavoriteItemAgenda} from "../components/FavoriteItemAgenda";
 
 export const FavoriteScreen = () => {
     const [favoriteAgenda, getFavoriteAgenda] = useState([])
+    const [isNotAgenda, loadNotAgendaTemplate] = useState(false)
+
 
     const fetchFavoriteAgenda = async () => {
         const agenda = await DB.getAgenda()
         getFavoriteAgenda(agenda)
+
+        if (agenda.length != 0) {
+            loadNotAgendaTemplate(true)
+        }
     }
 
     const loadAgenda = useCallback(async () => await fetchFavoriteAgenda(), [fetchFavoriteAgenda])
@@ -16,28 +22,51 @@ export const FavoriteScreen = () => {
     useEffect(() => {
         fetchFavoriteAgenda()
     }, [])
+
+    const deleteAgenda = async (item) => {
+        const result = await DB.removeFavorite(item)
+        fetchFavoriteAgenda()
+        Alert.alert('Agenda deleted successfully')
+    }
+
+
     let content
     if (favoriteAgenda.length === 0) {
-        content = (<View style={style.loadContainer}>
-            <Image
-                source={
-                    require('../../assets/logo.png')
-                }>
 
-            </Image>
-            <Text style={style.loadText}>
-                Loading data...
-            </Text>
-        </View>)
+        if (isNotAgenda) {
+            content = (<View style={style.loadContainer}>
+                <Image
+                    source={
+                        require('../../assets/logo.png')
+                    }>
+
+                </Image>
+                <Text style={style.loadText}>
+                    Loading data...
+                </Text>
+            </View>)
+        } else {
+            content = (<View style={style.loadContainer}>
+                <Image
+                    source={
+                        require('../../assets/logo.png')
+                    }>
+
+                </Image>
+                <Text style={style.loadText}>
+                    There is data...
+                </Text>
+            </View>)
+        }
+
+
     } else {
        content = (
            <View>
 
                {
                    favoriteAgenda.map((item) => (
-                      <Text>
-                          { item.name }
-                      </Text>
+                       <FavoriteItemAgenda deleteAgenda={(item) => deleteAgenda(item)} Agenda={item} key={item.id} />
                    ))
                }
 
@@ -47,7 +76,7 @@ export const FavoriteScreen = () => {
 
 
     return (
-        <ScrollView>
+        <ScrollView style={style.container}>
            <View>
                { content }
            </View>
@@ -56,6 +85,11 @@ export const FavoriteScreen = () => {
 }
 
 const style = StyleSheet.create({
+    container: {
+        width: '100%',
+        height: '75%',
+        padding: 20
+    },
     loadContainer: {
         flex: 1,
         alignItems: 'center',

@@ -41,4 +41,17 @@ export class DB {
             })
         })
     }
+
+    static removeFavorite({id}) {
+        return new Promise((resolve, reject) => {
+            db.transaction(tx => {
+                tx.executeSql(
+                    'DELETE FROM agenda WHERE id = ?',
+                    [id],
+                    resolve,
+                    (_, error) => reject(error)
+                )
+            })
+        })
+    }
 }
