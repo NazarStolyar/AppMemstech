@@ -1,28 +1,33 @@
 {
   "expo": {
-    "name": "memstech",
+    "name": "Memstech",
     "slug": "memstech",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "updates": {
       "fallbackToCacheTimeout": 0
+    },
+    "icon": "./assets/new-icon.png",
+    "splash": {
+      "image": "./assets/new-splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.memtestechdev.memstech",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.memtestechdev.memstech",
+      "versionCode": 1,
+      "permissions": [
+
+      ]
     }
   }
 }
