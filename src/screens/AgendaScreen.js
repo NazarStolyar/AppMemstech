@@ -1,5 +1,5 @@
 import React, {useEffect, useCallback, useState} from 'react';
-import {View, Text, TextInput, StyleSheet, ScrollView, Image} from 'react-native'
+import {View, Text, TextInput, StyleSheet, ScrollView, Image, TouchableHighlight} from 'react-native'
 import {AgendaComponent} from "../components/AgendaComponent";
 import {ItemAgenda} from "./ItemAgenda";
 import {Env} from '../enviroments/env'
@@ -7,8 +7,10 @@ import {Env} from '../enviroments/env'
 export const AgendaScreen = () => {
     const [agenda, setAgenda] = useState([])
     const [filterAgenda, setFilter] = useState([])
+    const [session, setSesion] = useState([])
     const [itemAgenda, AgendaScreen] = useState(null)
     const [text, setText] = useState('')
+    const [isSession, setSession] = useState(false)
 
 
     const fetchAgenda = async () => {
@@ -19,6 +21,16 @@ export const AgendaScreen = () => {
         const data = await response.json()
         setAgenda(data.feed.entry)
         setFilter(data.feed.entry)
+        let arr = []
+        data.feed.entry.map((item, index) => {
+            arr.push({
+                name: item.gsx$section.$t,
+                id: index
+            })
+        })
+        let uniqIds = {}
+        let newArr = arr.filter(obj => !uniqIds[obj.name] && (uniqIds[obj.name] = true))
+        setSesion(newArr)
     }
 
     const loadAgenda = useCallback(async () => await fetchAgenda())
@@ -30,9 +42,18 @@ export const AgendaScreen = () => {
     let newAgenda;
     const changeText = (text) => {
         newAgenda = agenda.filter(item => {
-            return item.gsx$name.$t.indexOf(text) > -1
+            return item.gsx$chairmen.$t.indexOf(text) > -1 || item.gsx$secretary.$t.indexOf(text) > -1
         })
         setFilter(newAgenda)
+    }
+
+    const filterSession = (name) => {
+        console.log(name)
+        newAgenda = agenda.filter(item => {
+            return item.gsx$section.$t === name
+        })
+        setFilter(newAgenda)
+        setSession(true)
     }
 
     let content
@@ -54,19 +75,38 @@ export const AgendaScreen = () => {
     } else {
 
         if (!itemAgenda) {
-            content = (
-                <View>
-                    <TextInput  placeholder="Enter text" style={style.input} onChangeText={text => changeText(text)}/>
-                    {
-                        filterAgenda.map((item) => (
-                            <AgendaComponent key={item.gsx$number.$t} style={style.itemAgenda} onAgenda={(item) => {
-                                AgendaScreen(item)
-                            }} Agenda={item}/>
-                        ))
-                    }
-                </View>
 
-            )
+            if (!isSession) {
+                content = (
+                    <View>
+                        {
+                            session.map(item => (
+                                <TouchableHighlight key={item.id} onPress={() => filterSession(item.name)} style={style.session}>
+                                    <Text style={style.sessionText}>
+                                        { item.name }
+                                    </Text>
+                                </TouchableHighlight>
+                            ))
+                        }
+                    </View>
+                )
+            } else {
+                content = (
+                    <View>
+                        <TextInput  placeholder="Enter text" style={style.input} onChangeText={text => changeText(text)}/>
+                        {
+                            filterAgenda.map((item) => (
+                                <AgendaComponent key={item.gsx$number.$t} style={style.itemAgenda} onAgenda={(item) => {
+                                    AgendaScreen(item)
+                                }} Agenda={item}/>
+                            ))
+                        }
+                    </View>
+
+                )
+            }
+
+
         } else {
             content = <ItemAgenda backToAgenda={() => AgendaScreen(null)} Agenda={itemAgenda}/>
         }
@@ -107,5 +147,17 @@ const style = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         marginTop: 15
+    },
+    session: {
+        width: '100%',
+        padding: 10,
+        borderRadius: 5,
+        marginBottom: 10,
+        borderWidth: 2
+    },
+    sessionText: {
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: 'bold'
     }
 });

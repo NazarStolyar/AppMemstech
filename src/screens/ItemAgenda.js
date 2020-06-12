@@ -15,7 +15,7 @@ export const ItemAgenda = ({Agenda, backToAgenda}) => {
             name: item.gsx$name.$t,
             chairmen: item.gsx$chairmen.$t,
             secretary: item.gsx$secretary.$t,
-            description: item.gsx$description.$t
+            description: item.gsx$description.$t,
         }
         const id =  await DB.addFavorite(agenda)
         Alert.alert('Agenda added successfully')
@@ -44,6 +44,9 @@ export const ItemAgenda = ({Agenda, backToAgenda}) => {
 
                         </Feather.Button>
                     </View>
+                </View>
+                <View>
+                    <Text style={style.additionsText}> {Agenda.gsx$author.$t} </Text>
                 </View>
                 <View>
                    <Text style={style.additionsText}> {Agenda.gsx$description.$t} </Text>

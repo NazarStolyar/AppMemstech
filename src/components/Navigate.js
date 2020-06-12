@@ -1,23 +1,22 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, Button} from 'react-native';
-import {  Entypo, MaterialCommunityIcons, Octicons, FontAwesome, Feather } from '@expo/vector-icons';
-
+import {  Entypo, Octicons, FontAwesome, SimpleLineIcons } from '@expo/vector-icons';
 
 export const Navigate = ({ onSubmit, onScreen }) => {
     return (
         <View style={style.navigate}>
-            <Entypo.Button style={style.button}
-                           name='compass'
+            <FontAwesome.Button style={style.button}
+                           name='home'
                            size={30}
                            color={onScreen === 'mainScreen' ? '#00AAFF' : '#4B4B4B'}
                            onPress={() => onSubmit('mainScreen')}>
-            </Entypo.Button>
-            <MaterialCommunityIcons.Button style={style.button}
-                                           name='monitor'
+            </FontAwesome.Button>
+            <Entypo.Button style={style.button}
+                                           name='mic'
                                            size={30}
                                            color={onScreen === 'agendaScreen' ? '#00AAFF' : '#4B4B4B'}
                                            onPress={() => onSubmit('agendaScreen')}>
-            </MaterialCommunityIcons.Button>
+            </Entypo.Button>
             <Octicons.Button style={style.button}
                              name='info'
                              size={30}
@@ -30,12 +29,12 @@ export const Navigate = ({ onSubmit, onScreen }) => {
                                 color={onScreen === 'committeScree' ? '#00AAFF' : '#4B4B4B'}
                                 onPress={() => onSubmit('committeScree')}>
             </FontAwesome.Button>
-            <Feather.Button style={style.button}
-                                name="star"
+            <SimpleLineIcons.Button style={style.button}
+                                name="list"
                                 size={30}
                                 color={onScreen === 'favoriteScreen' ? '#00AAFF' : '#4B4B4B'}
                                 onPress={() => onSubmit('favoriteScreen')}>
-            </Feather.Button>
+            </SimpleLineIcons.Button>
         </View>
     );
 }
