@@ -16,6 +16,7 @@ export const ItemAgenda = ({Agenda, backToAgenda}) => {
             chairmen: item.gsx$chairmen.$t,
             secretary: item.gsx$secretary.$t,
             description: item.gsx$description.$t,
+            author: item.gsx$author.$t,
         }
         const id =  await DB.addFavorite(agenda)
         Alert.alert('Agenda added successfully')

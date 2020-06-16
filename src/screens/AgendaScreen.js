@@ -1,5 +1,5 @@
 import React, {useEffect, useCallback, useState} from 'react';
-import {View, Text, TextInput, StyleSheet, ScrollView, Image, TouchableHighlight} from 'react-native'
+import {View, Text, TextInput, Button, StyleSheet, ScrollView, Image, TouchableHighlight} from 'react-native'
 import {AgendaComponent} from "../components/AgendaComponent";
 import {ItemAgenda} from "./ItemAgenda";
 import {Env} from '../enviroments/env'
@@ -42,8 +42,9 @@ export const AgendaScreen = () => {
     let newAgenda;
     const changeText = (text) => {
         newAgenda = agenda.filter(item => {
-            return item.gsx$chairmen.$t.indexOf(text) > -1 || item.gsx$secretary.$t.indexOf(text) > -1
+            return item.gsx$chairmen.$t.indexOf(text) > -1 || item.gsx$secretary.$t.indexOf(text) > -1 || item.gsx$author.$t.indexOf(text) > -1
         })
+        setSession(true)
         setFilter(newAgenda)
     }
 
@@ -79,6 +80,7 @@ export const AgendaScreen = () => {
             if (!isSession) {
                 content = (
                     <View>
+                        <TextInput  placeholder="Enter text" style={style.input} onChangeText={text => changeText(text)}/>
                         {
                             session.map(item => (
                                 <TouchableHighlight key={item.id} onPress={() => filterSession(item.name)} style={style.session}>
@@ -93,7 +95,12 @@ export const AgendaScreen = () => {
             } else {
                 content = (
                     <View>
-                        <TextInput  placeholder="Enter text" style={style.input} onChangeText={text => changeText(text)}/>
+                        <View style={style.input_group}>
+                            <TextInput  placeholder="Enter text" style={style.input_btn} onChangeText={text => changeText(text)}/>
+                            <Button onPress={() => setSession(false)} title='Back' style={style.btn} />
+                        </View>
+
+
                         {
                             filterAgenda.map((item) => (
                                 <AgendaComponent key={item.gsx$number.$t} style={style.itemAgenda} onAgenda={(item) => {
@@ -159,5 +166,19 @@ const style = StyleSheet.create({
         textAlign: 'center',
         fontSize: 20,
         fontWeight: 'bold'
+    },
+    input_group: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    input_btn: {
+        width: '70%',
+        borderBottomWidth: 1,
+        borderBottomColor: '#00AAFF',
+        marginBottom: 20,
+    },
+    btn: {
+
     }
 });

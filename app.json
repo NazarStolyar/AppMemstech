@@ -3,7 +3,7 @@
     "name": "Memstech",
     "slug": "memstech",
     "platforms": ["ios", "android"],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -20,11 +20,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.memtestechdev.memstech",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.1"
     },
     "android": {
       "package": "com.memtestechdev.memstech",
-      "versionCode": 1,
+      "versionCode": 2,
       "permissions": [
 
       ]
