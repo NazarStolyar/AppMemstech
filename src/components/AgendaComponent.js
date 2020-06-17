@@ -1,17 +1,20 @@
 import React from 'react'
 import {View, Text, Button, StyleSheet} from 'react-native'
 
-export const AgendaComponent = ({ Agenda, onAgenda }) => {
+export const AgendaComponent = ({Agenda, onAgenda}) => {
     return (
         <View style={style.item}>
-            <Text style={style.section}>{ Agenda.gsx$section.$t }</Text>
+            <View style={style.head}>
+                <Text style={style.number}> {Agenda.gsx$number.$t} </Text>
+                <Text style={style.section}>{Agenda.gsx$section.$t}</Text>
+            </View>
             <View style={style.table}>
                 <View style={style.rowTable}>
-                    <Text style={style.date}>{ Agenda.gsx$date.$t }</Text>
-                    <Text style={style.date}>{ Agenda.gsx$timestart.$t }</Text>
+                    <Text style={style.date}>Date: {Agenda.gsx$date.$t}</Text>
+                    <Text style={style.date}>Time: {Agenda.gsx$timestart.$t}</Text>
                 </View>
                 <View>
-                    <Text style={style.description}>{ Agenda.gsx$name.$t }</Text>
+                    <Text style={style.description}>{Agenda.gsx$name.$t}</Text>
                 </View>
             </View>
             <View style={style.rowButton}>
@@ -22,7 +25,7 @@ export const AgendaComponent = ({ Agenda, onAgenda }) => {
                 <View>
                     <Button onPress={() => {
                         onAgenda(Agenda)
-                    }} title='Open' />
+                    }} title='Open'/>
                 </View>
 
 
@@ -33,8 +36,22 @@ export const AgendaComponent = ({ Agenda, onAgenda }) => {
 }
 
 const style = StyleSheet.create({
+    head: {
+        position: 'relative'
+    },
+    number: {
+        position: 'absolute',
+        fontSize: 16,
+        fontWeight: 'bold',
+        left: 0
+    },
     item: {
-      marginBottom: 25
+        marginBottom: 25
+    },
+    thead: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginBottom: 5
     },
     section: {
         fontSize: 18,

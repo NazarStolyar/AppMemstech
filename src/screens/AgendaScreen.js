@@ -49,7 +49,6 @@ export const AgendaScreen = () => {
     }
 
     const filterSession = (name) => {
-        console.log(name)
         newAgenda = agenda.filter(item => {
             return item.gsx$section.$t === name
         })
